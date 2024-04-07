@@ -1,40 +1,67 @@
 import 'package:flutter/material.dart';
+import '../constants.dart';
 
-class OptionsCard extends StatefulWidget {
-  final Function(int) onTap;
-  final List<Color> cellColors;
-  const OptionsCard({Key? key, required this.onTap, required this.cellColors}) : super(key: key);
+class OptionsCard extends StatelessWidget {
+  final String option;
+  final Color color;
 
-  @override
-  _OptionsCardState createState() => _OptionsCardState();
-}
+  const OptionsCard({
+    Key? key,
+    required this.option,
+    required this.color,
+    
+  }) : super(key: key);
 
-class _OptionsCardState extends State<OptionsCard> {
   @override
   Widget build(BuildContext context) {
-    return GridView.builder(
-      gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-        crossAxisCount: 4,
-        crossAxisSpacing: 4.0,
-        mainAxisSpacing: 4.0,
-      ),
-      itemCount: 16,
-      itemBuilder: (BuildContext context, int index) {
-        return GestureDetector(
-          onTap: () => widget.onTap(index),
-          child: Container(
-            color: widget.cellColors[index],
-            child: Center(
-              child: Text(
-                '$index',
-                style: TextStyle(
-                  color: Colors.white,
-                ),
-              ),
-            ),
+    return Card (
+      color: color,
+      child: ListTile(
+        title: Text(
+          option, 
+          textAlign: TextAlign.center,
+          style: const TextStyle(
+            fontSize: 22.0,
           ),
-        );
-      },
+        ),
+      ),
     );
   }
 }
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+  // Widget build(BuildContext context) {
+  //   return GridView.builder(
+  //       itemCount: 16,
+  //       gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+  //         crossAxisCount: 4,
+  //       ),
+  //       itemBuilder: (_, index) {
+  //         return GestureDetector(
+  //           onTap: onTap,
+  //           child: Card(
+  //             color: isClicked 
+  //                 ? answers[index] == true
+  //                   ? correct
+  //                   : incorrect
+  //                 : background,
+  //             child: Text(
+  //               options[index],
+  //             ),
+  //           ),
+  //         );
+  //       });
+  // }
+//}
