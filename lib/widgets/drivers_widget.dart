@@ -3,11 +3,12 @@ import 'package:flutter/material.dart';
 
 class DriversWidget extends StatelessWidget {
   const DriversWidget(
-    {Key? key, 
+    {super.key, 
     required this.driver, 
     required this.driverIndex,
-    required this.totalDrivers}) 
-    : super(key: key);
+    required this.totalDrivers});
+
+  // const DriversWidget({Key? key, required this.driver, required this.driverIndex,required this.totalDrivers}) : super(key: key);
 
   final String driver;
   final int driverIndex;

@@ -7,11 +7,13 @@ class ResultBox extends StatelessWidget {
   final VoidCallback onPress;
 
   const ResultBox({
-    Key? key,
+    super.key,
     required this.result,
     required this.drivers,
     required this.onPress,
-  }) : super(key: key);
+  });
+
+  //   const ResultBox({Key? key, required this.result, required this.drivers, required this.onPress, }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -29,16 +31,16 @@ class ResultBox extends StatelessWidget {
               ),
               const SizedBox(height: 20.0),
               CircleAvatar(
-                child: Text(
-                  '$result/$drivers',
-                  style: TextStyle(fontSize: 30.0),
-                ),
                 radius: 70.0,
                 backgroundColor: result == drivers / 2
                     ? Colors.yellow // when the result is half the questions
                     : result < drivers / 2
                         ? incorrect // when the result is less than half the questions
-                        : correct, // when the result is more than half the questions
+                        : correct,
+                child: Text(
+                  '$result/$drivers',
+                  style: const TextStyle(fontSize: 30.0),
+                ), // when the result is more than half the questions
               ),
               const SizedBox(height: 20.0),
               Text(

@@ -9,59 +9,32 @@ class OptionsCard extends StatelessWidget {
     Key? key,
     required this.option,
     required this.color,
-    
   }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    return Card (
+    return Card(
       color: color,
-      child: ListTile(
-        title: Text(
-          option, 
-          textAlign: TextAlign.center,
-          style: const TextStyle(
-            fontSize: 22.0,
+      child: Container(
+        padding: const EdgeInsets.only(top: 15.0),
+        child: Column(children: [
+          Container(
+            padding: const EdgeInsets.only(bottom: 6.0),
+            child: Image.asset(
+              ('assets/images/$option.png'),
+              width: 40.0, // Scaled down 
+              height: 40.0, // Scaled down
+            ),
           ),
-        ),
+          Text(
+            option,
+            style: const TextStyle(
+              fontSize: 10.0,
+              fontWeight: FontWeight.bold,
+            ),
+          ),
+        ]),
       ),
     );
   }
 }
-  
-
-
-
-
-
-
-
-
-
-
-
-
-
-  // Widget build(BuildContext context) {
-  //   return GridView.builder(
-  //       itemCount: 16,
-  //       gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-  //         crossAxisCount: 4,
-  //       ),
-  //       itemBuilder: (_, index) {
-  //         return GestureDetector(
-  //           onTap: onTap,
-  //           child: Card(
-  //             color: isClicked 
-  //                 ? answers[index] == true
-  //                   ? correct
-  //                   : incorrect
-  //                 : background,
-  //             child: Text(
-  //               options[index],
-  //             ),
-  //           ),
-  //         );
-  //       });
-  // }
-//}
