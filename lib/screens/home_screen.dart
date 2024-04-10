@@ -1,5 +1,7 @@
 // ignore_for_file: library_private_types_in_public_api
 
+import 'dart:ffi';
+
 import 'package:flutter/material.dart';
 //import 'package:flutter/widgets.dart';
 import '../constants.dart';
@@ -47,7 +49,7 @@ class _HomeScreenState extends State<HomeScreen> {
     });
   }
 
-    void screenOff() {
+  void screenOff() {
     setState(() {
       screenState = false;
     });
@@ -126,27 +128,39 @@ class _HomeScreenState extends State<HomeScreen> {
             return Center(
               child: Text('${snapshot.error}'),
             );
-          }   if (snapshot.hasData) {
+          }
+          if (snapshot.hasData) {
             var extractedData = snapshot.data as List<Driver>;
             return Stack(
               children: [
                 Scaffold(
                   appBar: AppBar(
-                    title: const Text('F1 Bingo'),
-                    backgroundColor: background,
-                    actions: [
-                      Padding(
-                        padding: const EdgeInsets.all(18.0),
-                        child: Text(
-                          'Score: $score',
-                          style: const TextStyle(fontSize: 18.0),
-                        ),
+                    title: const Text(
+                      'F1 Bingo',
+                      style: TextStyle(
+                        color: red,
+                        fontFamily: 'Formula1',
+                        fontWeight: FontWeight.w700,
                       ),
-                    ],
+                    ),
+                    backgroundColor: appBackground,
+                    // actions: [
+                    //   Padding(
+                    //     padding: const EdgeInsets.all(18.0),
+                    //     child: Text(
+                    //       'Score: $score',
+                    //       style: const TextStyle(
+                    //         fontSize: 18.0,
+                    //         color: Colors.grey,
+                    //       ),
+                    //     ),
+                    //   ),
+                    // ],
                   ),
                   body: Container(
                     width: double.infinity,
                     padding: const EdgeInsets.symmetric(horizontal: 10.0),
+                    color: appBackground,
                     child: Column(
                       children: [
                         DriversWidget(
@@ -154,7 +168,7 @@ class _HomeScreenState extends State<HomeScreen> {
                           driverIndex: index,
                           totalDrivers: extractedData.length,
                         ),
-                        const Divider(color: normal),
+                        //const Divider(color: Colors.white),
                         const SizedBox(height: 25.0),
                         Flexible(
                           child: GridView.count(
@@ -173,8 +187,10 @@ class _HomeScreenState extends State<HomeScreen> {
                                   skipDriver(extractedData.length);
                                 },
                                 child: OptionsCard(
-                                  option:
-                                      extractedData[index].options.keys.toList()[i],
+                                  option: extractedData[index]
+                                      .options
+                                      .keys
+                                      .toList()[i],
                                   color: isNewRound == false
                                       ? cellColor[i] == '255,219,225,253'
                                           ? cellStatus[i]
@@ -187,18 +203,28 @@ class _HomeScreenState extends State<HomeScreen> {
                                                   : incorrect
                                               : background
                                           : Color.fromARGB(
-                                              int.parse(cellColor[i].split(',')[0]),
-                                              int.parse(cellColor[i].split(',')[1]),
-                                              int.parse(cellColor[i].split(',')[2]),
-                                              int.parse(cellColor[i].split(',')[3]),
+                                              int.parse(
+                                                  cellColor[i].split(',')[0]),
+                                              int.parse(
+                                                  cellColor[i].split(',')[1]),
+                                              int.parse(
+                                                  cellColor[i].split(',')[2]),
+                                              int.parse(
+                                                  cellColor[i].split(',')[3]),
                                             )
                                       : background,
+                                  index: extractedData[index]
+                                      .options
+                                      .keys
+                                      .toList()
+                                      .asMap()
+                                      .keys
+                                      .toList()[i],
                                 ),
                               ),
                             ),
                           ),
                         ),
-                        
                       ],
                     ),
                   ),
@@ -212,11 +238,11 @@ class _HomeScreenState extends State<HomeScreen> {
                   floatingActionButtonLocation:
                       FloatingActionButtonLocation.centerFloat,
                 ),
-            if (!screenState)
-              const ModalBarrier(
-              // color: Colors.black.withOpacity(0.5),
-              dismissible: false, // ignores clicking
-          ),
+                if (!screenState)
+                  const ModalBarrier(
+                    // color: Colors.black.withOpacity(0.5),
+                    dismissible: false, // ignores clicking
+                  ),
               ],
             );
           }
@@ -241,7 +267,6 @@ class _HomeScreenState extends State<HomeScreen> {
         }
         return const Center(
           child: Text('No data'),
-          
         );
       },
     );

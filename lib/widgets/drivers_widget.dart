@@ -3,10 +3,10 @@ import 'package:flutter/material.dart';
 
 class DriversWidget extends StatelessWidget {
   const DriversWidget(
-    {super.key, 
-    required this.driver, 
-    required this.driverIndex,
-    required this.totalDrivers});
+      {super.key,
+      required this.driver,
+      required this.driverIndex,
+      required this.totalDrivers});
 
   // const DriversWidget({Key? key, required this.driver, required this.driverIndex,required this.totalDrivers}) : super(key: key);
 
@@ -18,30 +18,28 @@ class DriversWidget extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       alignment: Alignment.centerLeft,
+      margin: const EdgeInsets.all(15.0),
+      padding: const EdgeInsets.all(10.0),
+      decoration: BoxDecoration(
+        borderRadius: BorderRadius.circular(10),
+        border: Border.all(color: Colors.white)),
       child: Row(
         children: [
-          Padding(
-            padding: const EdgeInsets.only(top: 10, left: 10),
-            child: Text(
+          Text(
               // 'Driver ${driverIndex + 1}: $driver / $totalDrivers drivers',
               driver,
               style: const TextStyle(
-                fontSize: 18,
-                color: normal,
-              )
-            ),
-          ),
+                fontSize: 15,
+                color: Colors.white,
+                fontFamily: 'Formula1',
+              )),
           const Spacer(),
-          Padding(
-            padding: const EdgeInsets.only(top: 10, right: 10),
-            child: Text(
-              '$totalDrivers remaining',
+          Text('${totalDrivers - driverIndex - 1} remaining',
               style: const TextStyle(
-                fontSize: 18,
-                color: normal,
-              )
-            ),
-          ),
+                fontSize: 15,
+                fontFamily: 'Formula1',
+                color: Colors.white,
+              )),
         ],
       ),
     );

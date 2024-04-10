@@ -15,8 +15,14 @@ class SkipButton extends StatelessWidget {
       ),
       padding: const EdgeInsets.symmetric(vertical: 10.0),
       child: const Text(
-        'Skip', 
-        textAlign: TextAlign.center
+        'Skip driver', 
+        textAlign: TextAlign.center,
+        style: TextStyle(
+          color: normal,
+          fontSize: 20.0,
+          fontFamily: 'Formula1',
+          fontWeight: FontWeight.bold,
+        ),
       ),
     );
   }
