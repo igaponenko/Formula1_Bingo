@@ -37,25 +37,36 @@ class _HomeScreenState extends State<HomeScreen> {
   int score = 0;
 
   List<bool> cellStatus = List.generate(16, (index) => false);
+  List<bool> cellPressed = List.generate(16, (index) => false);
+  List<String> cellColor = List.generate(16, (index) => '255,219,225,253');
 
   void answerCheckUpdate(bool value, int cell) {
     setState(() {
       isNewRound = false;
+      cellPressed[cell] = true;
     });
+
     if (cellStatus[cell] == false) {
       setState(() {
         cellStatus[cell] = true;
       });
     }
-    for (int i = 0; i < cellStatus.length; i++) {
-      print(cellStatus[i]);
-    }
-
+    // for (int i = 0; i < cellStatus.length; i++) { // for testing
+    //   print(cellStatus[i]);
+    // }
+    print(value);
+    print(cellStatus[cell]);
     if (value) {
       setState(() {
         score++;
+        cellColor[cell] = '255,128,214,131';
+      });
+    } else if (!value) {
+      setState(() {
+        cellColor[cell] = '255,212,75,75';
       });
     }
+    print(cellColor[cell]);
   }
 
   void skipDriver(int driverLength) {
@@ -72,7 +83,6 @@ class _HomeScreenState extends State<HomeScreen> {
     } else {
       setState(() {
         index++;
-        isNewRound = true;
       });
     }
   }
@@ -81,6 +91,12 @@ class _HomeScreenState extends State<HomeScreen> {
     setState(() {
       index = 0;
       score = 0;
+      isNewRound = true;
+      for (int i = 0; i < 16; i++) {
+        cellPressed[i] = false;
+        cellStatus[i] = false;
+        cellColor[i] = '255,219,225,253';
+      }
     });
     Navigator.of(context).pop();
   }
@@ -129,22 +145,35 @@ class _HomeScreenState extends State<HomeScreen> {
                         children: List.generate(
                           extractedData[index].options.length,
                           (i) => GestureDetector(
-                            onTap: () => answerCheckUpdate(
-                                extractedData[index].options.values.toList()[i],
-                                i),
+                            onTap: () {
+                              answerCheckUpdate(
+                                  extractedData[index]
+                                      .options
+                                      .values
+                                      .toList()[i],
+                                  i);
+                              skipDriver(extractedData.length);
+                            },
                             child: OptionsCard(
                               option:
                                   extractedData[index].options.keys.toList()[i],
                               color: isNewRound == false
-                                  ? cellStatus[i]
-                                      ? extractedData[index]
-                                                  .options
-                                                  .values
-                                                  .toList()[i] ==
-                                              true
-                                          ? correct
-                                          : incorrect
-                                      : background
+                                  ? cellColor[i] == '255,219,225,253'
+                                      ? cellStatus[i]
+                                          ? extractedData[index]
+                                                      .options
+                                                      .values
+                                                      .toList()[i] ==
+                                                  true
+                                              ? correct
+                                              : incorrect
+                                          : background
+                                      : Color.fromARGB(
+                                          int.parse(cellColor[i].split(',')[0]),
+                                          int.parse(cellColor[i].split(',')[1]),
+                                          int.parse(cellColor[i].split(',')[2]),
+                                          int.parse(cellColor[i].split(',')[3]),
+                                        )
                                   : background,
                             ),
                           ),
