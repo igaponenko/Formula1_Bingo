@@ -35,17 +35,32 @@ class _HomeScreenState extends State<HomeScreen> {
   int index = 0;
   bool isNewRound = false;
   int score = 0;
+  bool screenState = true;
 
   List<bool> cellStatus = List.generate(16, (index) => false);
   List<bool> cellPressed = List.generate(16, (index) => false);
   List<String> cellColor = List.generate(16, (index) => '255,219,225,253');
 
+  void screenOn() {
+    setState(() {
+      screenState = true;
+    });
+  }
+
+    void screenOff() {
+    setState(() {
+      screenState = false;
+    });
+  }
+
   void answerCheckUpdate(bool value, int cell) {
+    if (cellPressed[cell]) {
+      return;
+    }
     setState(() {
       isNewRound = false;
       cellPressed[cell] = true;
     });
-
     if (cellStatus[cell] == false) {
       setState(() {
         cellStatus[cell] = true;
@@ -68,21 +83,22 @@ class _HomeScreenState extends State<HomeScreen> {
 
   void skipDriver(int driverLength) {
     Future.delayed(const Duration(milliseconds: 500), () {
-    if (index == driverLength - 1) {
-      showDialog(
-          context: context,
-          barrierDismissible:
-              false, // disables the functionality of tapping outside the dialog box to close it
-          builder: (ctx) => ResultBox(
-                result: score,
-                drivers: driverLength,
-                onPress: startOver,
-              ));
-    } else {
-      setState(() {
-        index++;
-      });
-    }
+      if (index == driverLength - 1) {
+        showDialog(
+            context: context,
+            barrierDismissible:
+                false, // disables the functionality of tapping outside the dialog box to close it
+            builder: (ctx) => ResultBox(
+                  result: score,
+                  drivers: driverLength,
+                  onPress: startOver,
+                ));
+      } else {
+        setState(() {
+          index++;
+        });
+      }
+      screenOn();
     });
   }
 
@@ -110,87 +126,98 @@ class _HomeScreenState extends State<HomeScreen> {
             return Center(
               child: Text('${snapshot.error}'),
             );
-          } else if (snapshot.hasData) {
+          }   if (snapshot.hasData) {
             var extractedData = snapshot.data as List<Driver>;
-            return Scaffold(
-              appBar: AppBar(
-                title: const Text('F1 Bingo'),
-                backgroundColor: background,
-                actions: [
-                  Padding(
-                    padding: const EdgeInsets.all(18.0),
-                    child: Text(
-                      'Score: $score',
-                      style: const TextStyle(fontSize: 18.0),
-                    ),
+            return Stack(
+              children: [
+                Scaffold(
+                  appBar: AppBar(
+                    title: const Text('F1 Bingo'),
+                    backgroundColor: background,
+                    actions: [
+                      Padding(
+                        padding: const EdgeInsets.all(18.0),
+                        child: Text(
+                          'Score: $score',
+                          style: const TextStyle(fontSize: 18.0),
+                        ),
+                      ),
+                    ],
                   ),
-                ],
-              ),
-              body: Container(
-                width: double.infinity,
-                padding: const EdgeInsets.symmetric(horizontal: 10.0),
-                child: Column(
-                  children: [
-                    DriversWidget(
-                      driver: extractedData[index].name,
-                      driverIndex: index,
-                      totalDrivers: extractedData.length,
-                    ),
-                    const Divider(color: normal),
-                    const SizedBox(height: 25.0),
-                    Flexible(
-                      child: GridView.count(
-                        crossAxisCount: 4,
-                        children: List.generate(
-                          extractedData[index].options.length,
-                          (i) => GestureDetector(
-                            onTap: () {
-                              answerCheckUpdate(
-                                  extractedData[index]
-                                      .options
-                                      .values
-                                      .toList()[i],
-                                  i);
-                              skipDriver(extractedData.length);
-                            },
-                            child: OptionsCard(
-                              option:
-                                  extractedData[index].options.keys.toList()[i],
-                              color: isNewRound == false
-                                  ? cellColor[i] == '255,219,225,253'
-                                      ? cellStatus[i]
-                                          ? extractedData[index]
-                                                      .options
-                                                      .values
-                                                      .toList()[i] ==
-                                                  true
-                                              ? correct
-                                              : incorrect
-                                          : background
-                                      : Color.fromARGB(
-                                          int.parse(cellColor[i].split(',')[0]),
-                                          int.parse(cellColor[i].split(',')[1]),
-                                          int.parse(cellColor[i].split(',')[2]),
-                                          int.parse(cellColor[i].split(',')[3]),
-                                        )
-                                  : background,
+                  body: Container(
+                    width: double.infinity,
+                    padding: const EdgeInsets.symmetric(horizontal: 10.0),
+                    child: Column(
+                      children: [
+                        DriversWidget(
+                          driver: extractedData[index].name,
+                          driverIndex: index,
+                          totalDrivers: extractedData.length,
+                        ),
+                        const Divider(color: normal),
+                        const SizedBox(height: 25.0),
+                        Flexible(
+                          child: GridView.count(
+                            crossAxisCount: 4,
+                            children: List.generate(
+                              extractedData[index].options.length,
+                              (i) => GestureDetector(
+                                onTap: () {
+                                  screenOff();
+                                  answerCheckUpdate(
+                                      extractedData[index]
+                                          .options
+                                          .values
+                                          .toList()[i],
+                                      i);
+                                  skipDriver(extractedData.length);
+                                },
+                                child: OptionsCard(
+                                  option:
+                                      extractedData[index].options.keys.toList()[i],
+                                  color: isNewRound == false
+                                      ? cellColor[i] == '255,219,225,253'
+                                          ? cellStatus[i]
+                                              ? extractedData[index]
+                                                          .options
+                                                          .values
+                                                          .toList()[i] ==
+                                                      true
+                                                  ? correct
+                                                  : incorrect
+                                              : background
+                                          : Color.fromARGB(
+                                              int.parse(cellColor[i].split(',')[0]),
+                                              int.parse(cellColor[i].split(',')[1]),
+                                              int.parse(cellColor[i].split(',')[2]),
+                                              int.parse(cellColor[i].split(',')[3]),
+                                            )
+                                      : background,
+                                ),
+                              ),
                             ),
                           ),
                         ),
-                      ),
+                        
+                      ],
                     ),
-                  ],
+                  ),
+                  floatingActionButton: GestureDetector(
+                    onTap: () => skipDriver(extractedData.length),
+                    child: const Padding(
+                      padding: EdgeInsets.symmetric(horizontal: 10.0),
+                      child: SkipButton(),
+                    ),
+                  ),
+                  floatingActionButtonLocation:
+                      FloatingActionButtonLocation.centerFloat,
                 ),
-              ),
-              floatingActionButton: GestureDetector(
-                onTap: () => skipDriver(extractedData.length),
-                child: const Padding(
-                  padding: EdgeInsets.symmetric(horizontal: 10.0),
-                  child: SkipButton(),
-                ),
-              ),
-              floatingActionButtonLocation:
-                  FloatingActionButtonLocation.centerFloat,
+            if (!screenState)
+              const ModalBarrier(
+              // color: Colors.black.withOpacity(0.5),
+              dismissible: false, // ignores clicking
+          ),
+              ],
             );
           }
         } else {
@@ -214,6 +241,7 @@ class _HomeScreenState extends State<HomeScreen> {
         }
         return const Center(
           child: Text('No data'),
+          
         );
       },
     );

@@ -18,12 +18,31 @@ class DriversWidget extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       alignment: Alignment.centerLeft,
-      child: Text(
-        'Driver ${driverIndex + 1}: $driver / $totalDrivers drivers',
-        style: const TextStyle(
-          fontSize: 18,
-          color: normal,
-        )
+      child: Row(
+        children: [
+          Padding(
+            padding: const EdgeInsets.only(top: 10, left: 10),
+            child: Text(
+              // 'Driver ${driverIndex + 1}: $driver / $totalDrivers drivers',
+              driver,
+              style: const TextStyle(
+                fontSize: 18,
+                color: normal,
+              )
+            ),
+          ),
+          const Spacer(),
+          Padding(
+            padding: const EdgeInsets.only(top: 10, right: 10),
+            child: Text(
+              '$totalDrivers remaining',
+              style: const TextStyle(
+                fontSize: 18,
+                color: normal,
+              )
+            ),
+          ),
+        ],
       ),
     );
   }
