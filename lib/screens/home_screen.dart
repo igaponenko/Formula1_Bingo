@@ -54,8 +54,6 @@ class _HomeScreenState extends State<HomeScreen> {
     // for (int i = 0; i < cellStatus.length; i++) { // for testing
     //   print(cellStatus[i]);
     // }
-    print(value);
-    print(cellStatus[cell]);
     if (value) {
       setState(() {
         score++;
@@ -66,10 +64,10 @@ class _HomeScreenState extends State<HomeScreen> {
         cellColor[cell] = '255,212,75,75';
       });
     }
-    print(cellColor[cell]);
   }
 
   void skipDriver(int driverLength) {
+    Future.delayed(const Duration(milliseconds: 500), () {
     if (index == driverLength - 1) {
       showDialog(
           context: context,
@@ -85,6 +83,7 @@ class _HomeScreenState extends State<HomeScreen> {
         index++;
       });
     }
+    });
   }
 
   void startOver() {
