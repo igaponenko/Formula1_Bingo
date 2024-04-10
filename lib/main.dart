@@ -10,14 +10,34 @@ void main() {
   //     id: '1',
   //     name: 'Max Verstappen',
   //     options: {
-  //       '1': true,
-  //       '2': false,
-  //       '3': false,
-  //       '4': false,
-  //       '5': true,
-  //       '6': false,
-  //       '7': false,
-  //       '8': false,
+  //       'RedBull': true,
+  //       'Sauber': false,
+  //       'Mercedes': false,
+  //       'McLaren': false,
+  //       'Ferrari': false,
+  //       'Haas': false,
+  //       'VCARB': false,
+  //       'Williams': false,
+  //       'AstonMartin': false,
+  //       'Alpine': false,
+  //     }
+  //   )
+  // );
+  // db.addDriver(
+  //   Driver(
+  //     id: '2',
+  //     name: 'Lando Norris',
+  //     options: {
+  //       'RedBull': false,
+  //       'Sauber': false,
+  //       'Mercedes': false,
+  //       'McLaren': true,
+  //       'Ferrari': false,
+  //       'Haas': false,
+  //       'VCARB': false,
+  //       'Williams': false,
+  //       'AstonMartin': false,
+  //       'Alpine': false,
   //     }
   //   )
   // );
