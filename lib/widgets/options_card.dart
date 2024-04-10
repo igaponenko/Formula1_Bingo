@@ -1,6 +1,7 @@
 import 'dart:math';
 import 'package:flutter/material.dart';
 import 'package:f1_bingo/constants.dart';
+import 'package:stroke_text/stroke_text.dart';
 
 class OptionsCard extends StatelessWidget {
   final String option;
@@ -53,7 +54,9 @@ class OptionsCard extends StatelessWidget {
                     textAlign: TextAlign.center,
                     style: const TextStyle(
                       fontSize: 10.0,
-                      fontWeight: FontWeight.bold,
+                      //fontWeight: FontWeight.bold,
+                      color: Colors.white,
+                      fontFamily: 'Formula1',
                     ),
                   ),
                 ),

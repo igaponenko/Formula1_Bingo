@@ -41,7 +41,7 @@ class _HomeScreenState extends State<HomeScreen> {
 
   List<bool> cellStatus = List.generate(16, (index) => false);
   List<bool> cellPressed = List.generate(16, (index) => false);
-  List<String> cellColor = List.generate(16, (index) => '255,219,225,253');
+  List<String> cellColor = List.generate(16, (index) => '0,0,0,0');
 
   void screenOn() {
     setState(() {
@@ -201,7 +201,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                                       true
                                                   ? correct
                                                   : incorrect
-                                              : background
+                                              : const Color.fromARGB(0, 0, 0, 0)
                                           : Color.fromARGB(
                                               int.parse(
                                                   cellColor[i].split(',')[0]),
