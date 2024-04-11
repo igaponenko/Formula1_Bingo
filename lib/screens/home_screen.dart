@@ -56,9 +56,6 @@ class _HomeScreenState extends State<HomeScreen> {
   }
 
   void answerCheckUpdate(bool value, int cell) {
-    if (cellPressed[cell]) {
-      return;
-    }
     setState(() {
       isNewRound = false;
       cellPressed[cell] = true;
@@ -135,6 +132,7 @@ class _HomeScreenState extends State<HomeScreen> {
             if (isNewRound) {
               extractedData.shuffle(Random());
             }
+            isNewRound = false;
             return Stack(
               children: [
                 Scaffold(
@@ -188,7 +186,9 @@ class _HomeScreenState extends State<HomeScreen> {
                                           .values
                                           .toList()[i],
                                       i);
+                                  //if (!cellPressed[i]) {
                                   skipDriver(extractedData.length);
+                                  //}
                                 },
                                 child: OptionsCard(
                                   option: extractedData[index]

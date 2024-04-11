@@ -40,11 +40,11 @@ class ResultBox extends StatelessWidget {
               const SizedBox(height: 20.0),
               CircleAvatar(
                 radius: 60.0,
-                backgroundColor: result == drivers / 2
-                    ? Colors.yellow // when the result is half the questions
-                    : result < drivers / 2
+                backgroundColor: result == 16 || result == drivers
+                    ? correct // when the result is half the questions
+                    : result <= 16 && result < drivers / 2
                         ? incorrect // when the result is less than half the questions
-                        : correct,
+                        : Colors.yellow,
                 child: Text(
                   //'$result/$drivers',
                   '$result',
