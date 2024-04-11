@@ -1,3 +1,5 @@
+import 'dart:math';
+
 import 'package:http/http.dart' as http;
 import './driver_model.dart';
 import 'dart:convert';
@@ -25,6 +27,7 @@ class DBconnect {
         );
         newDrivers.add(newDriver);
       });
+      //newDrivers.shuffle(Random());
       return newDrivers;
     });
   }

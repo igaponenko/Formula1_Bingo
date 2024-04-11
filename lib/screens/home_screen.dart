@@ -1,6 +1,6 @@
 // ignore_for_file: library_private_types_in_public_api
 
-import 'dart:ffi';
+import 'dart:math';
 
 import 'package:flutter/material.dart';
 //import 'package:flutter/widgets.dart';
@@ -94,6 +94,7 @@ class _HomeScreenState extends State<HomeScreen> {
                   result: score,
                   drivers: driverLength,
                   onPress: startOver,
+                  index: index,
                 ));
       } else {
         setState(() {
@@ -131,6 +132,9 @@ class _HomeScreenState extends State<HomeScreen> {
           }
           if (snapshot.hasData) {
             var extractedData = snapshot.data as List<Driver>;
+            if (isNewRound) {
+              extractedData.shuffle(Random());
+            }
             return Stack(
               children: [
                 Scaffold(
